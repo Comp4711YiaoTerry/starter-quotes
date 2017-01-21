@@ -23,11 +23,33 @@ class Welcome extends Application
 		$authors = array ();
 		foreach ($source as $record)
 		{
-			$authors[] = array ('who' => $record['who'], 'mug' => $record['mug'], 'href' => $record['where']);
+			$authors[] = array ('who' => $record['who'], 'mug' => $record['mug'], 'href' => $record['where'],'what' => $record['what']);
 		}
 		$this->data['authors'] = $authors;
 
 		$this->render();
 	}
+	public function random()
+	{
+		// this is the view we want shown
+		$this->data['pagebody'] = 'homepage';
+                
+		// build the list of authors, to pass on to our view
+		$source = $this->quotes->all();
+                
+                // generate random number from 0 to the size of quote array - 1
+                $randNum = rand(0,count($source)-1);
 
+                $record = $source[$randNum];
+                
+		$authors = array ();
+                
+                // only one randomly selected record
+                $authors[] = array ('who' => $record['who'], 'mug' => $record['mug'], 'href' => $record['where'],'what' => $record['what']);
+                
+
+		$this->data['authors'] = $authors;
+
+		$this->render();
+	}
 }
